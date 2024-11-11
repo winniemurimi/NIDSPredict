@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile 
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy 
 import pandas as pd  # Ensure you import pandas
@@ -24,6 +25,16 @@ class InputData(BaseModel):
     dst_host_srv_serror_rate: float
     dst_host_srv_count: float
     same_srv_rate: float
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust to your needs
+    allow_credentials=True,
+    allow_methods=["*"],  # Enable all methods
+    allow_headers=["*"],
+)
+
 
 @app.get('/')
 def index():
